@@ -29,37 +29,77 @@ console.log(4);
 
 //call back function
 
-const getTodos = (callback) =>{
-    const request = new XMLHttpRequest();
+const getTodos = (resource) =>{
+    return new Promise((resolve, reject) =>{
+        const request = new XMLHttpRequest();
 
     request.addEventListener("readystatechange", ()=>{
         //console.log(request, request.readyState);
         
     if(request.readyState === 4 && request.status === 200){
         const data = JSON.parse(request.responseText);
-        callback(undefined, data);
+        resolve(data);
     } else if (request.readyState === 4){
-        callback("could not fetch data", undefined);
+        reject("error getting resource");
     }
-    })
+    });
 
-    request.open('GET', 'todos.json');
+    request.open('GET', resource);
     request.send();
+    });
+};
+getTodos("AsyncJS/todos.json").then(data=>{
+    console.log("promise resolved:", data);
+}).catch (err=>{
+    console.log("promise rejected:", err);
+});
+//promise examples
+
+const getSomething = () =>{
+
+    return new Promise((resolve, reject) =>{
+        resolve("some data");
+        reject("some error");
+    });
 };
 
+// getSomething().then((data)=>{
+//     console.log(data);
+// }, (err)=>{
+//     console.log(err);
+// });
 
-console.log(1);
-console.log(2);
-getTodos((err, data) =>{
-    console.log("callback fired!");
-    if (err){
-        console.log(err);
-    } else {
-        console.log(data);
-    }
-});
+//another simple of way of writing Promise
+getSomething().then(data =>{
+    console.log(data);
+}).catch(err =>{
+    console.log(err);
+}); 
 
-console.log(3);
-console.log(4);
+
+
+// getTodos("todos/todos.json", (err, data) =>{
+//     console.log(data);
+//     getTodos("todos/cody.json", (err, data) =>{
+//         console.log(data);
+//         getTodos("todos/kaycee.json", (err, data) =>{
+//             console.log(data);
+//         });
+//     });
+// });
+
+// console.log(1);
+// console.log(2);
+// getTodos((err, data) =>{
+//     console.log("callback fired!");
+//     if (err){
+//         console.log(err);
+//     } else {
+//         console.log(data);
+//     }
+// });
+
+// console.log(3);
+// console.log(4);
 //console.log 3 and 4 does not wait for the callback function to be fired, before it executes
 //due to Async JS
