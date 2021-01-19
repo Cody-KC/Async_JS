@@ -1,13 +1,13 @@
-console.log(1);
-console.log(2);
+// console.log(1);
+// console.log(2);
 
 
-setTimeout(() =>{
-    console.log('callback function fired');
-}, 2000);
+// setTimeout(() =>{
+//     console.log('callback function fired');
+// }, 2000);
 
-console.log(3);
-console.log(4);
+// console.log(3);
+// console.log(4);
 
 //HTTP request
 //http requests gets data from another server, we make these request to API(application programme interface) endpoints
@@ -29,45 +29,45 @@ console.log(4);
 
 //call back function
 
-const getTodos = (resource) =>{
-    return new Promise((resolve, reject) =>{
-        const request = new XMLHttpRequest();
+// const getTodos = (resource) =>{
+//     return new Promise((resolve, reject) =>{
+//         const request = new XMLHttpRequest();
 
-    request.addEventListener("readystatechange", ()=>{
-        //console.log(request, request.readyState);
+//     request.addEventListener("readystatechange", ()=>{
+//         //console.log(request, request.readyState);
         
-    if(request.readyState === 4 && request.status === 200){
-        const data = JSON.parse(request.responseText);
-        resolve(data);
-    } else if (request.readyState === 4){
-        reject("error getting resource");
-    }
-    });
+//     if(request.readyState === 4 && request.status === 200){
+//         const data = JSON.parse(request.responseText);
+//         resolve(data);
+//     } else if (request.readyState === 4){
+//         reject("error getting resource");
+//     }
+//     });
 
-    request.open('GET', resource);
-    request.send();
-    });
-};
+//     request.open('GET', resource);
+//     request.send();
+//     });
+// };
 
 //chaining promise
-getTodos("todos.json").then(data=>{
-    console.log("promise 1 resolved:", data);
-    return getTodos("cody.json");
-}).then(data=>{
-    console.log("promise 2 resolved:", data);
-    return getTodos("kaycee.json");
-}).catch (err=>{
-    console.log("promise rejected:", err);
-});
-//promise examples
+// getTodos("todos.json").then(data=>{
+//     console.log("promise 1 resolved:", data);
+//     return getTodos("cody.json");
+// }).then(data=>{
+//     console.log("promise 2 resolved:", data);
+//     return getTodos("kaycee.json");
+// }).catch (err=>{
+//     console.log("promise rejected:", err);
+// });
+// //promise examples
 
-const getSomething = () =>{
+// const getSomething = () =>{
 
-    return new Promise((resolve, reject) =>{
-        resolve("some data");
-        reject("some error");
-    });
-};
+//     return new Promise((resolve, reject) =>{
+//         resolve("some data");
+//         reject("some error");
+//     });
+// };
 
 // getSomething().then((data)=>{
 //     console.log(data);
@@ -76,11 +76,11 @@ const getSomething = () =>{
 // });
 
 //another simple of way of writing Promise
-getSomething().then(data =>{
-    console.log(data);
-}).catch(err =>{
-    console.log(err);
-}); 
+// getSomething().then(data =>{
+//     console.log(data);
+// }).catch(err =>{
+//     console.log(err);
+// }); 
 
 
 
@@ -109,3 +109,16 @@ getSomething().then(data =>{
 // console.log(4);
 //console.log 3 and 4 does not wait for the callback function to be fired, before it executes
 //due to Async JS
+
+
+//fetch API
+//making HTTP request with fetch API
+fetch("todos.json").then((response) =>{
+    console.log("resolved", response);
+    return response.json();
+}).then((data)=>{
+    console.log(data);
+}).catch((err)=>{
+    console.log("rejected", err);
+});
+//with fetch API it only rejects when there is a network error.
