@@ -48,8 +48,14 @@ const getTodos = (resource) =>{
     request.send();
     });
 };
-getTodos("AsyncJS/todos.json").then(data=>{
-    console.log("promise resolved:", data);
+
+//chaining promise
+getTodos("todos.json").then(data=>{
+    console.log("promise 1 resolved:", data);
+    return getTodos("cody.json");
+}).then(data=>{
+    console.log("promise 2 resolved:", data);
+    return getTodos("kaycee.json");
 }).catch (err=>{
     console.log("promise rejected:", err);
 });
