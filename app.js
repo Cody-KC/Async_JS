@@ -124,19 +124,36 @@
 //with fetch API it only rejects when there is a network error.
 
 //ASYNC and await
+// const getTodos = async () =>{
+
+//     const response = await fetch ("cody.json");
+//     const data = await response.json();
+//     return data;
+// };
+
+
+// console.log(1);
+// console.log(2);
+
+// getTodos()
+// .then(data => console.log("resolved:", data));//this is non blocking code
+// // async is not supported by older browsers like IE8
+// console.log(3);
+// console.log(4);
+
+//throwing and catching errors
+
 const getTodos = async () =>{
 
-    const response = await fetch ("cody.json");
+    const response = await fetch ("coddy.json");
+
+    if (response.status !== 200) {
+        throw new Error("cannot fetch the data");
+    }
     const data = await response.json();
     return data;
 };
 
-
-console.log(1);
-console.log(2);
-
 getTodos()
-.then(data => console.log("resolved:", data));//this is non blocking code
-// async is not supported by older browsers like IE8
-console.log(3);
-console.log(4);
+.then(data => console.log("resolved:", data))
+.catch(err => console.log("rejected:", err.message));
